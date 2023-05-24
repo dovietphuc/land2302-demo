@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DemoTextView</string>
+    <string name="vietnamese_flag">Cờ Việt Nam</string>
+    <string name="contacts">Danh bạ</string>
+</resources>
