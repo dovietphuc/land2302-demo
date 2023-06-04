@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState != null) {
+            mValue = savedInstanceState.getInt("COUNT_KEY", 0)
+        }
+
         mTextCount = findViewById(R.id.tv_count)
         mButtonToast = findViewById(R.id.btn_toast)
         mButtonCount = findViewById(R.id.btn_count)
@@ -31,5 +35,10 @@ class MainActivity : AppCompatActivity() {
         mButtonToast.setOnClickListener {
             Toast.makeText(this, mValue.toString(), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("COUNT_KEY", mValue)
     }
 }

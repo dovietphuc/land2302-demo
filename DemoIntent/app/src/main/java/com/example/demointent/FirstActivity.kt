@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 
@@ -24,6 +25,38 @@ class FirstActivity : AppCompatActivity() {
             intent.putExtra(MESSAGE_KEY_EXTRA, "Hello second activity")
             startActivityForResult(intent, 1002)
         }
+
+        Log.d("PhucDVb", "onCreate: ");
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("PhucDVb", "onStart: ");
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("PhucDVb", "onResume: ");
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("PhucDVb", "onPause: ");
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("PhucDVb", "onStop: ");
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("PhucDVb", "onDestroy: ");
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("PhucDVb", "onRestart: ");
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
