@@ -12,31 +12,24 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demomusic.SongListAdapter.OnSongClickListener
+import com.example.demomusic.databinding.ActivityMainBinding
 import phucdv.android.musichelper.MediaHelper
 import phucdv.android.musichelper.Song
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mTxtTitle: TextView
-    lateinit var mTxtStartDuration: TextView
-    lateinit var mTxtEndDuration: TextView
-    lateinit var mSeekBar: SeekBar
-
-    lateinit var mBtnPrev: Button
-    lateinit var mBtnPlayPause: Button
-    lateinit var mBtnNext: Button
-
-    lateinit var mRcvSong: RecyclerView
     lateinit var mSongAdapter: SongListAdapter
 
     lateinit var mMusicController: MusicController
 
+    lateinit var mBinding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
         mMusicController = MusicController(this)
 
-        mRcvSong = findViewById(R.id.rcv_song)
         mSongAdapter = SongListAdapter(this, mMusicController.mListSong, object: OnSongClickListener {
             override fun onSongClick(pos: Int) {
                 if(pos == mMusicController.mPlayingSongPos){
@@ -53,19 +46,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        mRcvSong.layoutManager = LinearLayoutManager(this)
-        mRcvSong.adapter = mSongAdapter
+        mBinding.rcvSong.layoutManager = LinearLayoutManager(this)
+        mBinding.rcvSong.adapter = mSongAdapter
 
-
-        mBtnPrev = findViewById(R.id.btn_prev)
-        mBtnPlayPause = findViewById(R.id.btn_play_pause)
-        mBtnNext = findViewById(R.id.btn_next)
-
-        mTxtTitle = findViewById(R.id.txt_title)
-        mTxtStartDuration = findViewById(R.id.txt_start_duration)
-        mTxtEndDuration = findViewById(R.id.txt_end_duration)
-        mSeekBar = findViewById(R.id.seek_bar)
-        mSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        mBinding.controller.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {}
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -77,15 +61,15 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        mBtnPlayPause.setOnClickListener {
+        mBinding.controller.btnPlayPause.setOnClickListener {
 
         }
 
-        mBtnPrev.setOnClickListener {
+        mBinding.controller.btnPrev.setOnClickListener {
 
         }
 
-        mBtnNext.setOnClickListener {
+        mBinding.controller.btnNext.setOnClickListener {
 
         }
 
@@ -94,23 +78,27 @@ class MainActivity : AppCompatActivity() {
 
     fun notifySongPlayingChange() {
         val song = mMusicController.getCurrentPlayingSong()
-        if(song != null){
-            mTxtTitle.text = song.title
-            mTxtStartDuration.text = "00:00"
-            mTxtEndDuration.text = song.formatTimes
-            mSeekBar.min = 0
-            mSeekBar.max = song.millisTimes.toInt()
-            mSeekBar.progress = 0
+        if(song != null) {
+            mBinding.controller.apply {
+                this.song = song
+                txtStartDuration.text = "00:00"
+                txtEndDuration.text = song.formatTimes
+                seekBar.max = song.millisTimes.toInt()
+                seekBar.progress = 0
+            }
             object : Thread() {
                 override fun run() {
                     super.run()
                     while (mMusicController.isPlaying()) {
+                        val song = mMusicController.getCurrentPlayingSong()
                         val currentDuration = mMusicController.getCurrentDuration()
                         runOnUiThread {
-                            mSeekBar.progress = currentDuration
-                            mTxtStartDuration.text = Song.getFormatTimes(currentDuration.toLong())
-                            mTxtEndDuration.text =
-                                Song.getFormatTimes(song.millisTimes - currentDuration.toLong())
+                            mBinding.controller.apply {
+                                seekBar.progress = currentDuration
+                                txtStartDuration.text = Song.getFormatTimes(currentDuration.toLong())
+                                txtEndDuration.text =
+                                    Song.getFormatTimes(song!!.millisTimes - currentDuration.toLong())
+                            }
                         }
                         sleep(1000)
                     }

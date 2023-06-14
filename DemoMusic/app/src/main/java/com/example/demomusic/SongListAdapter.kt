@@ -3,6 +3,7 @@ package com.example.demomusic
 import android.content.ContentUris
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.ThumbnailUtils
 import android.net.Uri
@@ -20,7 +21,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
+import com.example.demomusic.databinding.SongItemBinding
 import phucdv.android.musichelper.Song
+import java.net.URI
+import java.net.URL
 
 class SongListAdapter(val mContext: Context, val mListSong: List<Song>, val onSongClickListener: OnSongClickListener) : Adapter<SongListAdapter.SongViewHolder>() {
 
@@ -40,10 +45,7 @@ class SongListAdapter(val mContext: Context, val mListSong: List<Song>, val onSo
     }
 
     inner class SongViewHolder(itemView: View) : ViewHolder(itemView){
-        val mImageView = itemView.findViewById<ImageView>(R.id.img_art)
-        val mTxtTitle = itemView.findViewById<TextView>(R.id.txt_title)
-        val mTxtArtist = itemView.findViewById<TextView>(R.id.txt_artist)
-        val mTxtDuration = itemView.findViewById<TextView>(R.id.txt_duration)
+        val mBinding = SongItemBinding.bind(itemView)
 
         init {
             itemView.setOnClickListener {
@@ -52,21 +54,9 @@ class SongListAdapter(val mContext: Context, val mListSong: List<Song>, val onSo
         }
 
         fun bind(song: Song){
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                mImageView.setImageURI(song.albumUri)
-            } else {
-//                val albumUri =
-//                    ContentUris.withAppendedId(
-//                        MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, song.albumUri.lastPathSegment!!.toLong())
-//                val albumArt =
-//                    mContext.contentResolver.loadThumbnail(albumUri, Size(100, 100), null)
-//                mImageView.setImageBitmap(albumArt)
-            }
 
-
-            mTxtTitle.text = song.title
-            mTxtArtist.text = song.artist
-            mTxtDuration.text = song.formatTimes
+            mBinding.song = song
+            mBinding.imageUrl = "https://galaxylands.com.vn/wp-content/uploads/2022/12/thong-tin-tieu-su-ca-si-bich-phuong-noi-tieng-showbiz-viet-5.jpg"
 
             if(adapterPosition == mPlayingPos){
                 if(mIsPlaying){

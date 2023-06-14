@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:background="#f1f1f1">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="6dp"
-        android:text="No song is playing"/>
+    <data>
+        <variable
+            name="song"
+            type="phucdv.android.musichelper.Song" />
+    </data>
 
-    <TextView
-        android:id="@+id/txt_start_duration"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
-        android:layout_below="@id/txt_title"/>
+        android:padding="10dp"
+        android:background="#f1f1f1">
 
-    <TextView
-        android:id="@+id/txt_end_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/txt_title"/>
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="6dp"
+            android:text='@{song.title != null ? song.title : "--"}' />
 
-    <SeekBar
-        android:id="@+id/seek_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/txt_start_duration"
-        android:layout_toStartOf="@id/txt_end_duration"
-        android:layout_below="@id/txt_title"/>
-
-    <LinearLayout
-        android:id="@+id/wrap_control"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@id/txt_end_duration">
-
-        <Button
-            android:id="@+id/btn_prev"
-            android:text="Prev"
+        <TextView
+            android:id="@+id/txt_start_duration"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btn_play_pause"
-            android:text="Play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btn_next"
-            android:text="Next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_below="@id/txt_title" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/txt_end_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/txt_title" />
 
-</RelativeLayout>
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/txt_start_duration"
+            android:layout_toStartOf="@id/txt_end_duration"
+            android:layout_below="@id/txt_title" />
+
+        <LinearLayout
+            android:id="@+id/wrap_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/txt_end_duration">
+
+            <Button
+                android:id="@+id/btn_prev"
+                android:text="Prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_play_pause"
+                android:text="Play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:text="Next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
