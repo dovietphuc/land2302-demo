@@ -1,5 +1,6 @@
 package com.example.demointent
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,9 @@ class FirstActivity : AppCompatActivity() {
         mBtnStartSecondAct.setOnClickListener {
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra(MESSAGE_KEY_EXTRA, "Hello second activity")
-            startActivityForResult(intent, 1002)
+            val options = ActivityOptions
+                .makeSceneTransitionAnimation(this, mBtnStartSecondAct, "test")
+            startActivityForResult(intent, 1002, options.toBundle())
         }
 
         Log.d("PhucDVb", "onCreate: ");
