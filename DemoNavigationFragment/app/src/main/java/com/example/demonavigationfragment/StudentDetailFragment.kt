@@ -11,7 +11,9 @@ class StudentDetailFragment(private var id: Int = -1)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentStudentDetailBinding.bind(view)
-        id = requireArguments().getInt("STUDENT_ID_KEY", id)
+        if(arguments != null) {
+            id = arguments!!.getInt("STUDENT_ID_KEY", id)
+        }
         if(id != -1) {
             binding.txtName.text = DATA_LIST[id]
         }
