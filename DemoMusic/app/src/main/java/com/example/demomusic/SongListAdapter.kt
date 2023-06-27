@@ -56,7 +56,6 @@ class SongListAdapter(val mContext: Context, val mListSong: List<Song>, val onSo
         fun bind(song: Song){
 
             mBinding.song = song
-            mBinding.imageUrl = "https://galaxylands.com.vn/wp-content/uploads/2022/12/thong-tin-tieu-su-ca-si-bich-phuong-noi-tieng-showbiz-viet-5.jpg"
 
             if(adapterPosition == mPlayingPos){
                 if(mIsPlaying){
