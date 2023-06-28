@@ -5,11 +5,12 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.provider.MediaStore
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import phucdv.android.musichelper.Song
 
 class MusicController(val mContext: Context) {
     private val mMediaPlayer = MediaPlayer()
-    var mPlayingSongPos = -1
+    var mPlayingSongPos = MutableLiveData<Int>(-1)
     val mListSong = ArrayList<Song>()
     private var mIsPreparing = false
 
@@ -29,9 +30,9 @@ class MusicController(val mContext: Context) {
     }
 
     fun getCurrentPlayingSong() : Song? {
-        if(mPlayingSongPos < 0 || mPlayingSongPos >= mListSong.size)
+        if(mPlayingSongPos.value!! < 0 || mPlayingSongPos.value!! >= mListSong.size)
             return null
-        return mListSong[mPlayingSongPos]
+        return mListSong[mPlayingSongPos.value!!]
     }
 
     fun isPlaying(): Boolean {
@@ -47,8 +48,8 @@ class MusicController(val mContext: Context) {
     }
 
     fun playSong(pos: Int) {
-        mPlayingSongPos = pos
-        val songId = mListSong[mPlayingSongPos].id
+        mPlayingSongPos.value = pos
+        val songId = mListSong[mPlayingSongPos.value!!].id
         mMediaPlayer.reset()
         val trackUri =
             ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songId)
@@ -62,18 +63,18 @@ class MusicController(val mContext: Context) {
     }
 
     fun playNext(){
-        mPlayingSongPos++
-        if(mPlayingSongPos >= mListSong.size){
-            mPlayingSongPos = 0
+        mPlayingSongPos.value = mPlayingSongPos.value!! + 1
+        if(mPlayingSongPos.value!! >= mListSong.size){
+            mPlayingSongPos.value = 0
         }
-        playSong(mPlayingSongPos)
+        playSong(mPlayingSongPos.value!!)
     }
 
     fun playPrev(){
-        mPlayingSongPos--
-        if(mPlayingSongPos < 0){
-            mPlayingSongPos = mListSong.size - 1
+        mPlayingSongPos.value = mPlayingSongPos.value!! - 1
+        if(mPlayingSongPos.value!! < 0){
+            mPlayingSongPos.value = mListSong.size - 1
         }
-        playSong(mPlayingSongPos)
+        playSong(mPlayingSongPos.value!!)
     }
 }

@@ -13,6 +13,7 @@ import java.io.FileNotFoundException
 
 @BindingAdapter("url")
 fun setImageUrl(view: ImageView, url: String) {
+    if(url == null) return
     Glide.with(view)
         .load(url)
         .centerCrop()
@@ -23,6 +24,7 @@ fun setImageUrl(view: ImageView, url: String) {
 
 @BindingAdapter("url")
 fun setImageUrl(view: ImageView, uri: Uri) {
+    if(uri == null) return
     if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
         Glide.with(view)
             .load(uri)
@@ -35,7 +37,7 @@ fun setImageUrl(view: ImageView, uri: Uri) {
             Glide.with(view)
                 .load(
                     view.context.contentResolver
-                        .loadThumbnail(uri, Size(500, 500), null)
+                        .loadThumbnail(uri, Size(1500, 1500), null)
                 )
                 .centerCrop()
                 .placeholder(R.drawable.baseline_music_note_24)
