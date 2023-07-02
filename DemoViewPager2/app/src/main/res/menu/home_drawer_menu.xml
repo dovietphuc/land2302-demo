@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/pageOneFragment"
+        android:title="Page One" />
+
+    <item
+        android:id="@+id/pageTwoFragment"
+        android:title="Page Two" />
+
+    <item
+        android:id="@+id/pageThreeFragment"
+        android:title="Page Three" />
+</menu>
