@@ -29,7 +29,7 @@ class MusicRepository(val context: Context) {
                     MediaStore.Audio.Media.DURATION,
                     MediaStore.Audio.Media.ARTIST,
                     MediaStore.Audio.Media.ALBUM_ID,
-                    MediaStore.Audio.Media.ALBUM
+                    MediaStore.Audio.Media.ALBUM)
 
             val select = MediaStore.Audio.Media.IS_MUSIC + "=?"
             val selectArgs = arrayOf("1")

@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel(context: Application) : AndroidViewModel(context) {
     private val musicRepository: MusicRepository
-
     init {
         musicRepository = MusicRepository(context)
     }
