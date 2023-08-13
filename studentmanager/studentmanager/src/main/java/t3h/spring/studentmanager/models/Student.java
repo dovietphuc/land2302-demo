@@ -3,10 +3,12 @@ package t3h.spring.studentmanager.models;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class Student {
+@RequiredArgsConstructor
+public class Student implements Serializable {
     private UUID id;
     private String name;
     private long dateOfBirth;
